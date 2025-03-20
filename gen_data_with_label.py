@@ -36,12 +36,17 @@ gen_label_prompt = """
 import json
 from openai import OpenAI
 deepseek = OpenAI(api_key="xxx", base_url="http://10.193.22.12:8080/v1")
-cleaned_dataset_path = './datasets/cleaned_camp_data.jsonl'
 
+# 元数据
+# cleaned_dataset_path = './datasets/cleaned_camp_data.jsonl'
 # 被正确处理携带伪标签的数据
 correct_with_label_cleaned_dataset_path = './datasets/correct_with_label_cleaned_camp_data.jsonl'
 # 被错误处理携带伪标签的数据
-err_with_label_cleaned_dataset_path = './datasets/err_with_label_cleaned_camp_data.jsonl'
+# err_with_label_cleaned_dataset_path = './datasets/err_with_label_cleaned_camp_data.jsonl'
+
+cleaned_dataset_path = './datasets/err_with_label_cleaned_camp_data.jsonl'
+err_with_label_cleaned_dataset_path = './datasets/err_with_label_cleaned_camp_data_1.jsonl'
+
 
 def save_to_jsonl(file_path, data):
     """将数据写入JSONL文件"""
