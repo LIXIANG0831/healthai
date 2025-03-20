@@ -2,3 +2,5 @@ jupyter
 pandas
 modelscope
 openai
+unsloth
+datasets
