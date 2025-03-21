@@ -4,7 +4,10 @@ from trl import SFTTrainer
 from transformers import TrainingArguments
 from transformers.trainer_utils import SaveStrategy
 from datasets import load_dataset, Features, Value
+import wandb
 
+# Wandb 初始化
+wandb.init(project="Qwen2.5-7B-Instruct-Lora-FineTuning", name="25-3-21/1")  # 你可以自定义项目名称和运行名称
 #本地模型目录
 cache_dir = '/root/.cache/modelscope/hub/models'
 model_name = f'{cache_dir}/Qwen/Qwen2.5-7B-Instruct'
@@ -22,6 +25,7 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     model_type='qwen2',
     cache_dir=cache_dir
 )
+
 # 训练数据集
 train_dataset_path = './datasets/alpaca_train_dataset.jsonl'
 
@@ -39,6 +43,7 @@ train_dataset = load_dataset(
     split="train", 
     features=_train_features,
 )
+
 def formatting_alpaca_prompts_func(example):
     alpaca_prompt = """Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
     ### Instruction:
@@ -97,10 +102,15 @@ trainer = SFTTrainer(
         weight_decay=0.01,
         lr_scheduler_type="linear",
         seed=322,
+        report_to="wandb",  #  启用 Wandb 集成
     ),
 )
+
 #开始训练
 trainer.train()
 
 #保存微调模型
 model.save_pretrained("Qwen-2.5-7B-Instruct-Lora")
+
+# Wandb 结束
+wandb.finish()
