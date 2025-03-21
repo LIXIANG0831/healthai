@@ -7,7 +7,7 @@ from datasets import load_dataset, Features, Value
 import wandb
 
 # Wandb 初始化
-wandb.init(project="Qwen2.5-7B-Instruct-Lora-FineTuning", name="25-3-21/1")  # 你可以自定义项目名称和运行名称
+wandb.init(project="Qwen2.5-7B-Instruct-Lora-FineTuning-Exp", name="25-3-21/1")  # 你可以自定义项目名称和运行名称
 #本地模型目录
 cache_dir = '/root/.cache/modelscope/hub/models'
 model_name = f'{cache_dir}/Qwen/Qwen2.5-7B-Instruct'
@@ -95,7 +95,7 @@ trainer = SFTTrainer(
         learning_rate=2e-4,
         fp16=not torch.cuda.is_bf16_supported(),
         bf16=torch.cuda.is_bf16_supported(),
-        logging_steps=100,
+        logging_steps=1,
         save_strategy=SaveStrategy.EPOCH,
         output_dir=checkpoint_save_path, # checkpoints 存放目录
         optim="adamw_8bit",
