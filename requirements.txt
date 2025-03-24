@@ -4,3 +4,4 @@ modelscope
 openai
 unsloth
 datasets
+vllm

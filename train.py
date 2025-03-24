@@ -111,6 +111,7 @@ trainer.train()
 
 #保存微调模型
 model.save_pretrained("Qwen-2.5-7B-Instruct-Lora")
+tokenizer.save_pretrained("Qwen-2.5-7B-Instruct-Lora")
 
 # Wandb 结束
 wandb.finish()
