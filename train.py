@@ -5,6 +5,8 @@ from transformers import TrainingArguments
 from transformers.trainer_utils import SaveStrategy
 from datasets import load_dataset, Features, Value
 import wandb
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
 
 # Wandb 初始化
 wandb.init(project="Qwen2.5-7B-Instruct-Lora-FineTuning-Exp", name="25-3-24/2")  # 你可以自定义项目名称和运行名称
@@ -88,7 +90,7 @@ trainer = SFTTrainer(
     tokenizer=tokenizer,
     args=TrainingArguments(
         per_device_train_batch_size=2,
-        gradient_accumulation_steps=4,
+        gradient_accumulation_steps=8,
         warmup_steps=5,
         # max_steps=60, # 训练迭代次数
         num_train_epochs=3, # 基于 Epoch 训练
