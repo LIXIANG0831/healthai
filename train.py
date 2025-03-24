@@ -7,7 +7,7 @@ from datasets import load_dataset, Features, Value
 import wandb
 
 # Wandb 初始化
-wandb.init(project="Qwen2.5-7B-Instruct-Lora-FineTuning-Exp", name="25-3-21/1")  # 你可以自定义项目名称和运行名称
+wandb.init(project="Qwen2.5-7B-Instruct-Lora-FineTuning-Exp", name="25-3-24/1")  # 你可以自定义项目名称和运行名称
 #本地模型目录
 cache_dir = '/root/.cache/modelscope/hub/models'
 model_name = f'{cache_dir}/Qwen/Qwen2.5-7B-Instruct'
@@ -91,7 +91,7 @@ trainer = SFTTrainer(
         gradient_accumulation_steps=4,
         warmup_steps=100,
         # max_steps=60, # 训练迭代次数
-        num_train_epochs=3, # 基于 Epoch 训练
+        num_train_epochs=10, # 基于 Epoch 训练
         learning_rate=2e-4,
         fp16=not torch.cuda.is_bf16_supported(),
         bf16=torch.cuda.is_bf16_supported(),
@@ -107,7 +107,10 @@ trainer = SFTTrainer(
 )
 
 #开始训练
-trainer.train()
+# trainer.train()
+
+#继续上一次检查点训练
+trainer.train(resume_from_checkpoint=True)
 
 #保存微调模型
 model.save_pretrained("Qwen-2.5-7B-Instruct-Lora")
